@@ -1,6 +1,6 @@
 # .gitignore
 node_modules/
 .env
-dist/
-build/
+# dist/
+# build/
 order-service/utils/firebase.json
