@@ -1,0 +1,36 @@
+name: Deploy Order Management App
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "20"
+
+      - name: Install dependencies
+        run: npm install
+        working-directory: ./order-service
+
+      - name: Run tests
+        run: npm test
+        working-directory: ./order-service
+
+      - name: Deploy to AWS
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: "ap-south-1"
+        run: |
+          echo "Deploy logic here"
+          # Example: zip app and push to Elastic Beanstalk, EC2, or ECS
